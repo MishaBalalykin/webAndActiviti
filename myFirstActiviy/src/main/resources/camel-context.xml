@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <camelContext xmlns="http://camel.apache.org/schema/spring">
+        <!-- here is a sample which processes the input files
+             (leaving them in place - see the 'noop' flag)
+             then performs content based routing on the message using XPath -->
+        <route>
+            <from uri="file:src/data?noop=true"/>
+            <choice>
+                <when>
+                    <xpath>/person/city = 'London'</xpath>
+                    <log message="UK message"/>
+                    <to uri="file:target/messages/uk"/>
+                </when>
+                <otherwise>
+                    <log message="Other message"/>
+                    <to uri="file:target/messages/others"/>
+                </otherwise>
+            </choice>
+        </route>
+    </camelContext>
+
+    <!-- ConfigurationSpring -->
+    <context:property-placeholder location="classpath*:log4j2.properties" />
+
+    <!-- Annotation based configuration -->
+    <!--<context:annotation-config />-->
+    <context:component-scan base-package="com.jet.edu" />
+
+
+    <!-- Data -->
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@10.38.161.115:1521:myDatabase"/>
+        <property name="username" value="balalykin"/>
+        <property name="password" value="balalykin"/>
+    </bean>
+
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+    <!--
+      Activiti
+    -->
+    <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+        <property name="databaseType" value="oracle" />
+        <property name="dataSource" ref="dataSource" />
+        <property name="transactionManager" ref="transactionManager" />
+        <property name="databaseSchemaUpdate" value="true" />
+        <property name="jobExecutorActivate" value="false" />
+        <property name="deploymentResources" value="classpath*:/process/DBWriter.bpmn20.xml" />
+    </bean>
+
+    <bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+        <property name="processEngineConfiguration" ref="processEngineConfiguration" />
+    </bean>
+
+    <bean id="repositoryService" factory-bean="processEngine"
+          factory-method="getRepositoryService" />
+    <bean id="runtimeService" factory-bean="processEngine"
+          factory-method="getRuntimeService" />
+    <bean id="taskService" factory-bean="processEngine"
+          factory-method="getTaskService" />
+    <bean id="historyService" factory-bean="processEngine"
+          factory-method="getHistoryService" />
+    <bean id="managementService" factory-bean="processEngine"
+          factory-method="getManagementService" />
+
+    <bean id="oracleRemover" class="com.jet.edu.impl.OracleRemover"/>
+    <bean id="oracleReader" class="com.jet.edu.impl.OracleReader"/>
+    <bean id="oracleWriter" class="com.jet.edu.impl.OracleWriter"/>
+    <bean id="bpmnWriter" class="com.jet.edu.impl.BpmnWriter"/>
+
+</beans>
+
