@@ -1,4 +1,4 @@
-package com.jet.web.servlets;
+package com.jet.web.servlets.servletsForReadWrateAndRemove;
 
 
 import com.jet.edu.service.DatabaseReaderService;

@@ -1,4 +1,4 @@
-package com.jet.web.servlets;
+package com.jet.web.servlets.servletsForReadWrateAndRemove;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -6,4 +6,6 @@
     <bean id="writer" class="com.jet.edu.service.DatabaseWriterService"/>
     <bean id="reader" class="com.jet.edu.service.DatabaseReaderService"/>
     <bean id="remover" class="com.jet.edu.service.DatabaseRemoverService"/>
+
+    <bean id="userTask" class="com.jet.edu.service.UserTaskService"/>
 </beans>
