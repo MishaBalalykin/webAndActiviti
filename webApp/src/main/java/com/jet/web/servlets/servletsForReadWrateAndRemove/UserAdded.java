@@ -26,7 +26,7 @@ public class UserAdded extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         createWriter();
-        req.getRequestDispatcher("UserAdded.jsp").forward(req, resp);
+        req.getRequestDispatcher("webFormsForReaderWriterAndRemover/UserAdded.jsp").forward(req, resp);
         Map<String, Object> users = new HashMap<>();
         users.put("surname", req.getParameter("surname"));
         users.put("name", req.getParameter("name"));

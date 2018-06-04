@@ -34,6 +34,6 @@ public class ViewUsers extends HttpServlet {
         createReader();
         users = dbReader.readFromBD();
         req.setAttribute("users", users);
-        req.getRequestDispatcher("ViewUser.jsp").forward(req, resp);
+        req.getRequestDispatcher("webFormsForReaderWriterAndRemover/ViewUser.jsp").forward(req, resp);
     }
 }

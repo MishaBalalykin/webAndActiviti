@@ -25,6 +25,6 @@ public class RemoveAllUsers extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         createRemover();
         dbRemover.removeFromBD();
-        req.getRequestDispatcher("UsersRemoved.jsp").forward(req, resp);
+        req.getRequestDispatcher("webFormsForReaderWriterAndRemover/UsersRemoved.jsp").forward(req, resp);
     }
 }

@@ -30,7 +30,8 @@ public class StartUserTask extends HttpServlet {
         System.out.println("i'm hear");
         if (userTaskService.startUserTAsk().equalsIgnoreCase("i'm waiting for button")){
             System.out.println("111111111111111111111111111111111");
-            req.getRequestDispatcher("ProcessStarted.html").forward(req, resp);
+            req.getRequestDispatcher("webFormsForTestUserTask/ProcessStarted.html").forward(req, resp);
+            //req.getRequestDispatcher("webFormsForTestUserTask/twist.html").forward(req, resp);
         }
         System.out.println("and now hear");
     }

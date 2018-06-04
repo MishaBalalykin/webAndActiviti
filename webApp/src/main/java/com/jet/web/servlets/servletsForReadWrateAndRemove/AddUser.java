@@ -12,6 +12,6 @@ public class AddUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("i'm hear");
-        req.getRequestDispatcher("AddUser.jsp").forward(req, resp);
+        req.getRequestDispatcher("webFormsForReaderWriterAndRemover/AddUser.jsp").forward(req, resp);
     }
 }

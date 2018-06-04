@@ -25,9 +25,7 @@ public class ContinueUserTask extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         createBeans();
-
-        userTaskService.
-                finishProcess();
-        req.getRequestDispatcher("ProcessFinished.html").forward(req, resp);
+        userTaskService.finishProcess();
+        req.getRequestDispatcher("webFormsForTestUserTask/ProcessFinished.html").forward(req, resp);
     }
 }
